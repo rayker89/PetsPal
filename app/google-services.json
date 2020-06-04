@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "856168549106",
+    "firebase_url": "https://petspal-d2b29.firebaseio.com",
+    "project_id": "petspal-d2b29",
+    "storage_bucket": "petspal-d2b29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856168549106:android:831cfec323942cfbcc1e6b",
+        "android_client_info": {
+          "package_name": "com.example.petspal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856168549106-tn64n6iq5i719gqbprisdupvtn4ls04p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS6EL82Q52IjwCqyhn2qVxm-7w87k2gkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856168549106-tn64n6iq5i719gqbprisdupvtn4ls04p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

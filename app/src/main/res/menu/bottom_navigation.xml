@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_pet_icon"
+        android:icon="@drawable/nav_add"
+        android:title="ADD PET" />
+    <item
+        android:id="@+id/calendar_icon"
+        android:icon="@drawable/nav_calendar"
+        android:title="CALENDAR" />
+    <item
+        android:id="@+id/home_icon"
+        android:icon="@drawable/nav_home"
+        android:title="HOME" />
+    <item
+        android:id="@+id/alerts_icon"
+        android:icon="@drawable/nav_alert"
+        android:title="ALERTS" />
+</menu>

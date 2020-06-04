@@ -1,0 +1,2 @@
+rootProject.name='PetsPal'
+include ':app'

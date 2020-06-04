@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Pets Pal</string>
+
+    <string name="Species">Species</string>
+
+    <string name="Species1">Bird</string>
+    <string name="Species2">Cat</string>
+    <string name="Species3">Dog</string>
+    <string name="Species4">Fish</string>
+    <string name="Species5">Horse</string>
+    <string name="Species6">Humster</string>
+    <string name="Species7">Rabbit</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="speciesList">
+        <item>@string/Species1</item>
+        <item>@string/Species2</item>
+        <item>@string/Species3</item>
+        <item>@string/Species4</item>
+        <item>@string/Species5</item>
+        <item>@string/Species6</item>
+        <item>@string/Species7</item>
+    </string-array>
+
+
+
+
+
+</resources>
