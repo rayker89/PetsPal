@@ -5,10 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +24,7 @@ import com.example.petspal.ViewModels.PetViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.mikepenz.iconics.utils.parseXmlAndSetIconicsDrawables
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
@@ -34,6 +37,7 @@ import com.mikepenz.materialdrawer.widget.MaterialDrawerSliderView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Picasso.LoadedFrom
 import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.activity_dashboard_client.*
 
 
 class DashboardClient : AppCompatActivity() {
@@ -41,6 +45,8 @@ class DashboardClient : AppCompatActivity() {
     val item2 = SecondaryDrawerItem().withIdentifier(2).withName("SETTINGS").withSelectable(false)
     var petsList = ArrayList<Pet>()
     var slider:MaterialDrawerSliderView? = null
+    var currentPetProfile:Pet? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +56,7 @@ class DashboardClient : AppCompatActivity() {
 
         val nav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         val menu = nav.menu
+        bottom_nav.itemIconTintList = null
         val profile = menu.findItem(R.id.add_pet_icon)
         val add_pet = Pet_profile()
         val home = Home()
@@ -66,24 +73,27 @@ class DashboardClient : AppCompatActivity() {
                     val pet = petSnapshot.getValue(Pet::class.java)
                     pets.add(pet!!)
                 }
+                Log.d("PETVAL",slider?.accountHeader?.activeProfile?.icon?.uri.toString())
+                pets.forEach {
+                    if(slider?.accountHeader?.activeProfile?.icon?.uri.toString() == it.image )
+                        Picasso.get().load(it.image).into(object : Target {
 
+                            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                                // loaded bitmap is here (bitmap)
+                                val scaled = Bitmap.createScaledBitmap(bitmap,200,200,false)
+                                profile.setIcon(BitmapDrawable(nav.resources, scaled))
+                            }
 
-                Log.d("PETVAL", pets[0]?.image.toString())
-                Picasso.get().load(pets[0]?.image).into(object : Target {
+                            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
-                    override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                        // loaded bitmap is here (bitmap)
+                            override fun onBitmapFailed(e: java.lang.Exception?, errorDrawable: Drawable?) {
 
-                        profile.setIcon(BitmapDrawable(resources, bitmap))
-                    }
+                            }
 
-                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                        })
+                        currentPetProfile=it
+                }
 
-                    override fun onBitmapFailed(e: java.lang.Exception?, errorDrawable: Drawable?) {
-
-                    }
-
-                })
             }
 
         })
@@ -97,14 +107,17 @@ class DashboardClient : AppCompatActivity() {
 
             when(item.itemId) {
                 R.id.add_pet_icon -> {
-
-                    startActivity(Intent(this@DashboardClient, AddPet::class.java))
-                    finish()
-                    true
-                    /*val fragmentChanger = supportFragmentManager.beginTransaction()
-                    fragmentChanger.replace(R.id.frame_layout, add_pet)
-                    fragmentChanger.commit()
-                    true*/
+                    if(currentPetProfile==null){
+                        startActivity(Intent(this@DashboardClient, AddPet::class.java))
+                        finish()
+                        true
+                    }
+                    else {
+                        val fragmentChanger = supportFragmentManager.beginTransaction()
+                        fragmentChanger.replace(R.id.frame_layout, add_pet)
+                        fragmentChanger.commit()
+                        true
+                    }
 
                 }
 
@@ -175,12 +188,15 @@ class DashboardClient : AppCompatActivity() {
                             attachToSliderView(slider!!) // attach to the slider
                             petsList.forEach {
                                 addProfiles(
-                                    ProfileDrawerItem().withName(it.name).withEmail(it.breed).withContentDescription(it.key)
-                                        .withIcon(it.image.toString())
+                                    ProfileDrawerItem().withName(it.name).withEmail(it.breed)
+                                        .withIcon(it.image.toString()).withContentDescription(it.key)
+
                                 )
                             }
 
+
                         }
+
 
 
                     }catch (Ex:Exception) {
