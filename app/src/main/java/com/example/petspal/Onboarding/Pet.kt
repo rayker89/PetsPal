@@ -1,8 +1,8 @@
 package com.example.petspal.Onboarding
 
 
-class Pet(var name:String?, var dateOfBirth:String?, var species:String?, var gender:String?, var breed:String?, var weight:String?, var image:String?){
+class Pet(var key:String?, var name:String?, var dateOfBirth:String?, var species:String?, var gender:String?, var breed:String?, var weight:String?, var image:String?){
 
-    constructor() : this(null, null, null, null, null, null, null) {
+    constructor() : this(null,null, null, null, null, null, null, null) {
     }
 }

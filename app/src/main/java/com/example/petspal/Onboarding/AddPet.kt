@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_add_pet.*
+import kotlinx.android.synthetic.main.activity_dashboard_client.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,6 +64,14 @@ class AddPet : AppCompatActivity() {
             uploadImage()
         }
 
+        addPet_cancel_btn.setOnClickListener { onBackPressed() }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@AddPet, DashboardClient::class.java))
+        finish()
     }
 
     private fun checkFields() {
@@ -515,12 +524,13 @@ class AddPet : AppCompatActivity() {
     private fun addUploadRecordToDb(uri: String) {
         var myReference = db?.reference
         val key = firebaseAuth?.currentUser?.uid
-        val pet = Pet(
+        val keyPet = myReference?.child("pets")?.child(key.toString())?.push()?.key
+        val pet = Pet(keyPet,
             addPet_name.text.toString(), addPet_date_birth.text.toString(),
             addPet_spcies.selectedItem.toString(), addPet_gender.selectedItem.toString(),
             addPet_breed.selectedItem.toString(), addPet_weight.text.toString(), uri
         )
-        myReference?.child("pets")?.child(key.toString())?.push()?.setValue(pet)
+        myReference?.child("pets")?.child(key.toString())?.child(keyPet!!)?.setValue(pet)
             ?.addOnSuccessListener {
                 Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
                 startActivity(Intent(this@AddPet, DashboardClient::class.java))
