@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.petspal.Home.Adapter
 import com.example.petspal.Home.PostItem
 
 import com.example.petspal.R
+import kotlinx.android.synthetic.main.activity_dashboard_client.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -52,5 +54,11 @@ class Home : Fragment() {
         return layout
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val textview = activity!!.findViewById<View>(R.id.nav_title) as TextView
+        textview.text = "Tips & Tricks"
+    }
 
 }
