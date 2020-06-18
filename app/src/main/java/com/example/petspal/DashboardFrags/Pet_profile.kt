@@ -18,6 +18,25 @@ import kotlinx.android.synthetic.main.activity_dashboard_client.*
  */
 class Pet_profile : Fragment() {
 
+    var key:String? = null
+
+
+    companion object {
+        const val ARG_KEY = "key"
+
+        fun newInstance(key: String): Pet_profile {
+            val fragment = Pet_profile()
+
+            val bundle = Bundle().apply {
+                putString(ARG_KEY, key)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
 
 
 
@@ -25,6 +44,9 @@ class Pet_profile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        key = arguments?.getString(ARG_KEY)
+
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pet_profile, container, false)
@@ -46,11 +68,9 @@ class Pet_profile : Fragment() {
 
         val adapter = ViewPagerAdapter(childFragmentManager)
 
-
-
         // add your fragments
-        adapter.addFrag(Basic(), "Basic")
-        adapter.addFrag(Details(), "Details")
+        adapter.addFrag(Basic.newInstance(key!!), "Basic")
+        adapter.addFrag(Details.newInstance(key!!), "Details")
         adapter.addFrag(Medical(), "Medical")
         adapter.addFrag(Gallery(), "Gallery")
         adapter.addFrag(Log(), "Log")

@@ -21,4 +21,20 @@ class Gallery : Fragment() {
         return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
+    companion object {
+        const val ARG_KEY = "key"
+
+        fun newInstance(key: String): Gallery {
+            val fragment = Gallery()
+
+            val bundle = Bundle().apply {
+                putString(ARG_KEY, key)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
 }

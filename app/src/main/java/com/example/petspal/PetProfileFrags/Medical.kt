@@ -21,4 +21,20 @@ class Medical : Fragment() {
         return inflater.inflate(R.layout.fragment_medical, container, false)
     }
 
+    companion object {
+        const val ARG_KEY = "key"
+
+        fun newInstance(key: String): Medical {
+            val fragment = Medical()
+
+            val bundle = Bundle().apply {
+                putString(ARG_KEY, key)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
 }

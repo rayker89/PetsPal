@@ -21,4 +21,20 @@ class Log : Fragment() {
         return inflater.inflate(R.layout.fragment_log, container, false)
     }
 
+    companion object {
+        const val ARG_KEY = "key"
+
+        fun newInstance(key: String): Log {
+            val fragment = Log()
+
+            val bundle = Bundle().apply {
+                putString(ARG_KEY, key)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,12 +39,14 @@ import kotlinx.android.synthetic.main.activity_dashboard_client.*
 
 
 class DashboardClient : AppCompatActivity() {
+    private var currentPetKey: String? = null
     val addPet_item = PrimaryDrawerItem().withIdentifier(1).withName("Add Pet").withSelectable(false)
     val item1 = PrimaryDrawerItem().withIdentifier(2).withName("HOME").withSelectable(false)
     val item2 = SecondaryDrawerItem().withIdentifier(3).withName("SIGN OUT").withSelectable(false)
     var petsList = ArrayList<Pet>()
     var slider: MaterialDrawerSliderView? = null
     var currentPetProfile: Pet? = null
+    var Profile:Fragment? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +75,8 @@ class DashboardClient : AppCompatActivity() {
                         true
                     } else {
                         val fragmentChanger = supportFragmentManager.beginTransaction()
-                        fragmentChanger.replace(R.id.frame_layout, Pet_profile())
+                        val fragment = Pet_profile.newInstance(currentPetProfile?.key.toString())
+                        fragmentChanger.replace(R.id.frame_layout, fragment)
                         fragmentChanger.commit()
                         true
                     }
@@ -136,7 +140,7 @@ class DashboardClient : AppCompatActivity() {
                 }
                 Log.d("PETVAL", slider?.accountHeader?.activeProfile?.icon?.uri.toString())
                 pets.forEach {
-                    if (slider?.accountHeader?.activeProfile?.icon?.uri.toString() == it.image)
+                    if (slider?.accountHeader?.activeProfile?.icon?.uri.toString() == it.image){
                         Picasso.get().load(it.image).into(object : Target {
 
                             override fun onBitmapLoaded(
@@ -146,6 +150,7 @@ class DashboardClient : AppCompatActivity() {
                                 // loaded bitmap is here (bitmap)
                                 val scaled = Bitmap.createScaledBitmap(bitmap, 200, 200, false)
                                 profile.icon = BitmapDrawable(nav.resources, scaled)
+                                profile.title = it.name
                             }
 
                             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
@@ -157,8 +162,11 @@ class DashboardClient : AppCompatActivity() {
 
                             }
 
+
                         })
                     currentPetProfile = it
+                }
+
                 }
 
             }
