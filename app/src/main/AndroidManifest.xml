@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SampleApp.DayNight">
-        <activity android:name=".Onboarding.AddPet"></activity>
+        <activity android:name=".PetProfileFrags.DetailsEditInfo"></activity>
+        <activity android:name=".Onboarding.AddPet" />
         <activity android:name=".Onboarding.Loading" />
         <activity android:name=".Onboarding.Onboarding" />
         <activity android:name=".DashboardVet" />
